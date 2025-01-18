@@ -6,8 +6,6 @@ export const useDashboard = () => {
 	const queryClient = useQueryClient();
 	const request = useRequest();
 
-	const handleError = ( error: unknown ) => console.error( 'An error occurred:', error );
-
 	const { data: fetchedStats, isLoading } = useQuery<Stats>( {
 		queryKey: ['dashboardStats'],
 		queryFn: () => request.get( '/dashboard' ).then( ( res ) => res.data?.data ),

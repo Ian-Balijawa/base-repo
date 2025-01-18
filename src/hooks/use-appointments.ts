@@ -6,7 +6,7 @@ import { Appointment } from '../interfaces';
 export const useAppointments = ( id?: string ) => {
 	const request = useRequest();
 	const queryClient = useQueryClient();
-	const handleError = ( error: unknown ) => toast.error( 'An error occurred' );
+	const handleError = ( error: unknown ) => toast.error( 'An error occurred ' + JSON.stringify( error ) );
 
 	const { data: allAppointments, isLoading: isLoadingAllAppointments } = useQuery<Appointment[]>( {
 		queryKey: ['appointments'],
