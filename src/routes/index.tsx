@@ -19,6 +19,9 @@ import AdminsDashboard from "@/pages/admins/admins.dashboard";
 import AdminsDetails from "@/pages/admins/admins.details";
 import AdminsList from "@/pages/admins/admins.list";
 import AdminsNew from "@/pages/admins/admins.new";
+import AppointmentsDashboard from "@/pages/appointments/appointments.dashboard";
+import AppointmentsDetails from "@/pages/appointments/appointments.details";
+import AppointmentsList from "@/pages/appointments/appointments.list";
 
 export function AppRoutes() {
 	const routes = useRoutes([
@@ -80,6 +83,14 @@ export function AppRoutes() {
 						{ path: "list", element: <AdminsList /> },
 						{ path: "new", element: <AdminsNew /> },
 						{ path: ":id", element: <AdminsDetails /> },
+					],
+				},
+				{
+					path: "appointments",
+					children: [
+						{ index: true, element: <AppointmentsDashboard /> },
+						{ path: "list", element: <AppointmentsList /> },
+						{ path: ":id", element: <AppointmentsDetails /> },
 					],
 				},
 				{

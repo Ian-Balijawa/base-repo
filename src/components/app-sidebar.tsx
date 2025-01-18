@@ -12,9 +12,11 @@ import {
 	SidebarGroup,
 	SidebarGroupLabel,
 	SidebarRail,
+	SidebarFooter,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, List, UserPlus, Heart, User, Shield } from "lucide-react";
+import { LayoutDashboard, List, UserPlus, Heart, User, Shield, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { NavUser } from "@/components/nav-user";
 import { useAppSelector } from "../app/hooks";
 
 export function AppSidebar({ className }: React.ComponentProps<typeof Sidebar>) {
@@ -25,6 +27,15 @@ export function AppSidebar({ className }: React.ComponentProps<typeof Sidebar>) 
 			label: "Overview",
 			icon: LayoutDashboard,
 			href: "/",
+		},
+		{
+			label: "Appointments",
+			icon: Calendar,
+			href: "/appointments",
+			subItems: [
+				{ label: "Dashboard", href: "/appointments", icon: LayoutDashboard },
+				{ label: "All Appointments", href: "/appointments/list", icon: List },
+			],
 		},
 		{
 			label: "Patients",
@@ -106,10 +117,10 @@ export function AppSidebar({ className }: React.ComponentProps<typeof Sidebar>) 
 					</SidebarMenu>
 				</SidebarGroup>
 			</SidebarContent>
-			{/*
+
 			<SidebarFooter>
 				<NavUser user={user} />
-			</SidebarFooter> */}
+			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
 	);

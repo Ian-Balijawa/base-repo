@@ -37,6 +37,15 @@ export const useAppointments = ( id?: string ) => {
 		onError: handleError,
 	} );
 
+	const completeAppointmentMutation = useMutation( {
+		mutationFn: () => request.patch( `/appointments/${id}/complete` ),
+		onSuccess: ( data ) => {
+			queryClient.setQueryData( ['appointment', id], data.data?.data );
+			toast.success( 'Appointment completed successfully' );
+		},
+		onError: handleError,
+	} );
+
 	return {
 		allAppointments,
 		appointment,
@@ -46,5 +55,6 @@ export const useAppointments = ( id?: string ) => {
 		getIndividualappointment: () => queryClient.invalidateQueries( { queryKey: ['appointment', id] } ),
 		confirmAppointment: () => confirmAppointmentMutation.mutate(),
 		cancelAppointment: () => cancelAppointmentMutation.mutate(),
+		completeAppointment: () => completeAppointmentMutation.mutate(),
 	};
 };

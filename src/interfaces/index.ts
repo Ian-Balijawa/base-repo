@@ -48,6 +48,7 @@ export type Caregiver = ENTITY<{
 	isVerified: boolean;
 	dateOfBirth: string;
 	nin: string;
+	verificationStatus: string;
 	description: string;
 	rating: number;
 	address: string;

@@ -8,8 +8,8 @@ type BaseEntity = {
 
 
 export type User = BaseEntity & {
-	firstname: string;
-	lastname: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
 	phoneNumber: string;

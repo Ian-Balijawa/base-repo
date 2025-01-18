@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { FaUserCheck, FaBan, FaSpinner } from "react-icons/fa";
 import { toast } from "sonner";
+import { LocationInfo } from "@/components/location-info";
 
 export default function PatientDetails() {
 	const { id } = useParams();
@@ -85,7 +86,7 @@ export default function PatientDetails() {
 						<CardTitle>Personal Information</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<dl className="space-y-2">
+						<dl className="space-y-4">
 							<div>
 								<dt className="text-sm font-medium text-muted-foreground">Name</dt>
 								<dd>
@@ -106,6 +107,7 @@ export default function PatientDetails() {
 									)}
 								</dd>
 							</div>
+							<LocationInfo location={patient.location} />
 						</dl>
 					</CardContent>
 				</Card>
