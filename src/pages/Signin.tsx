@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,12 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
-import { FaGoogle, FaLock, FaSpinner } from "react-icons/fa";
+import { FaLock, FaSpinner } from "react-icons/fa";
 import { Mail } from "lucide-react";
 
-export default function Login() {
-	const navigate = useNavigate();
-	const { login } = useAuth();
+export default function Signin() {
+	const { signIn } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
 	const [credentials, setCredentials] = useState({
 		email: "",
@@ -24,34 +23,19 @@ export default function Login() {
 		setIsLoading(true);
 
 		try {
-			await login.mutateAsync(credentials);
-			toast.success("Welcome back!");
-			navigate("");
+			await signIn(credentials);
 		} catch (error: unknown) {
-			toast.error("Error logging in", {
-				// @ts-ignore
-				description: error.response?.data.error.message,
+			toast.error("Error signing in", {
+				description:
+					error instanceof Error ? error.message : "An unexpected error occurred",
 			});
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
-	const handleGoogleLogin = async () => {
-		try {
-			toast.success("Welcome back!");
-			navigate("");
-		} catch (error: unknown) {
-			toast.error("Error signing in with Google", {
-				// @ts-ignore
-				description: error.response?.data.error.message,
-			});
-		}
-	};
-
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 flex items-center justify-center p-4">
-			{/* Logo Section */}
 			<div className="w-full max-w-md">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
@@ -67,7 +51,7 @@ export default function Login() {
 								</div>
 							</div>
 							<h1 className="text-2xl font-bold text-white mb-2 group-hover:text-white/90">
-								BASE APP
+								Link Bedsides
 							</h1>
 						</Link>
 					</div>
@@ -81,24 +65,6 @@ export default function Login() {
 						</CardHeader>
 						<CardContent>
 							<form onSubmit={handleSubmit} className="grid gap-6">
-								<div className="flex flex-col gap-4">
-									<Button
-										type="button"
-										variant="outline"
-										className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20 transition-colors"
-										onClick={handleGoogleLogin}
-									>
-										<FaGoogle className="mr-2 h-4 w-4" />
-										Sign in with Google
-									</Button>
-								</div>
-
-								<div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-									<span className="relative z-10 bg-background px-2 text-muted-foreground">
-										Or continue with
-									</span>
-								</div>
-
 								<div className="grid gap-4">
 									<div className="grid gap-2">
 										<Label htmlFor="email" className="text-white/80">
@@ -171,19 +137,12 @@ export default function Login() {
 					</Card>
 
 					<div className="text-center text-white/40 text-xs">
-						By signing in, you agree to our{" "}
+						Don't have an account?{" "}
 						<Link
-							to="/terms"
-							className="underline underline-offset-4 hover:text-white/60"
+							to="/auth/signup"
+							className="text-white hover:text-white/90 underline underline-offset-4"
 						>
-							Terms of Service
-						</Link>{" "}
-						and{" "}
-						<Link
-							to="/privacy"
-							className="underline underline-offset-4 hover:text-white/60"
-						>
-							Privacy Policy
+							Create one
 						</Link>
 					</div>
 				</motion.div>

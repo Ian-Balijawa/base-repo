@@ -1,20 +1,47 @@
 import { useRoutes } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { ProtectedRoute } from "@/components/auth/protected-route";
-import Login from "@/pages/Login";
-import UsersDashboard from "@/pages/Users/users.dashboard";
-import UsersList from "@/pages/Users/users.list";
-import UsersNew from "@/pages/Users/users.new";
-import UserDetails from "@/pages/Users/users.details";
+import Signin from "@/pages/Signin";
+import CreateAccount from "@/pages/CreateAccount";
+import GetOTP from "@/pages/GetOtp";
 import Unauthorized from "@/pages/unauthorized";
 import NotFound from "@/pages/NotFound";
 import Dashboard from "@/pages/Dashboard";
+import PatientsDashboard from "@/pages/patients/patients.dashboard";
+import PatientsDetails from "@/pages/patients/patients.details";
+import PatientsList from "@/pages/patients/patients.list";
+import PatientsNew from "@/pages/patients/patients.new";
+import CaregiversDashboard from "@/pages/caregivers/caregivers.dashboard";
+import CaregiversDetails from "@/pages/caregivers/caregivers.details";
+import CaregiversList from "@/pages/caregivers/caregivers.list";
+import CaregiversNew from "@/pages/caregivers/caregivers.new";
+import AdminsDashboard from "@/pages/admins/admins.dashboard";
+import AdminsDetails from "@/pages/admins/admins.details";
+import AdminsList from "@/pages/admins/admins.list";
+import AdminsNew from "@/pages/admins/admins.new";
 
 export function AppRoutes() {
 	const routes = useRoutes([
 		{
-			path: "/login",
-			element: <Login />,
+			path: "/auth",
+			children: [
+				{
+					path: "signin",
+					element: <Signin />,
+				},
+				{
+					path: "login",
+					element: <Signin />,
+				},
+				{
+					path: "signup",
+					element: <CreateAccount />,
+				},
+				{
+					path: "verify-email",
+					element: <GetOTP />,
+				},
+			],
 		},
 		{
 			path: "/",
@@ -29,15 +56,32 @@ export function AppRoutes() {
 					element: <Dashboard />,
 				},
 				{
-					path: "users",
+					path: "patients",
 					children: [
-						{ index: true, element: <UsersDashboard /> },
-						{ path: "list", element: <UsersList /> },
-						{ path: "new", element: <UsersNew /> },
-						{ path: ":id", element: <UserDetails /> },
+						{ index: true, element: <PatientsDashboard /> },
+						{ path: "list", element: <PatientsList /> },
+						{ path: "new", element: <PatientsNew /> },
+						{ path: ":id", element: <PatientsDetails /> },
 					],
 				},
-
+				{
+					path: "caregivers",
+					children: [
+						{ index: true, element: <CaregiversDashboard /> },
+						{ path: "list", element: <CaregiversList /> },
+						{ path: "new", element: <CaregiversNew /> },
+						{ path: ":id", element: <CaregiversDetails /> },
+					],
+				},
+				{
+					path: "admins",
+					children: [
+						{ index: true, element: <AdminsDashboard /> },
+						{ path: "list", element: <AdminsList /> },
+						{ path: "new", element: <AdminsNew /> },
+						{ path: ":id", element: <AdminsDetails /> },
+					],
+				},
 				{
 					path: "unauthorized",
 					element: <Unauthorized />,

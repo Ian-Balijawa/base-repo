@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarFooter,
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuItem,
@@ -14,13 +13,12 @@ import {
 	SidebarGroupLabel,
 	SidebarRail,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, List, UserPlus } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { LayoutDashboard, List, UserPlus, Heart, User, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { NavUser } from "@/components/nav-user";
+import { useAppSelector } from "../app/hooks";
 
 export function AppSidebar({ className }: React.ComponentProps<typeof Sidebar>) {
-	const { user } = useAuth();
+	const user = useAppSelector((state) => state.auth.user);
 
 	const navItems = [
 		{
@@ -29,12 +27,31 @@ export function AppSidebar({ className }: React.ComponentProps<typeof Sidebar>) 
 			href: "/",
 		},
 		{
-			label: "Users",
-			icon: Users,
-			href: "/users",
+			label: "Patients",
+			icon: Heart,
+			href: "/patients",
 			subItems: [
-				{ label: "All Users", href: "/users/list", icon: List },
-				{ label: "Add User", href: "/users/new", icon: UserPlus },
+				{ label: "Dashboard", href: "/patients", icon: LayoutDashboard },
+				{ label: "All Patients", href: "/patients/list", icon: List },
+				{ label: "Add Patient", href: "/patients/new", icon: UserPlus },
+			],
+		},
+		{
+			label: "Caregivers",
+			icon: User,
+			href: "/caregivers",
+			subItems: [
+				{ label: "All Caregivers", href: "/caregivers/list", icon: List },
+				{ label: "Add Caregiver", href: "/caregivers/new", icon: UserPlus },
+			],
+		},
+		{
+			label: "Administrators",
+			icon: Shield,
+			href: "/admins",
+			subItems: [
+				{ label: "All Admins", href: "/admins/list", icon: List },
+				{ label: "Add Admin", href: "/admins/new", icon: UserPlus },
 			],
 		},
 	];
@@ -89,10 +106,10 @@ export function AppSidebar({ className }: React.ComponentProps<typeof Sidebar>) 
 					</SidebarMenu>
 				</SidebarGroup>
 			</SidebarContent>
-
+			{/*
 			<SidebarFooter>
 				<NavUser user={user} />
-			</SidebarFooter>
+			</SidebarFooter> */}
 			<SidebarRail />
 		</Sidebar>
 	);

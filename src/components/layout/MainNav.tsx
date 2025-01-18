@@ -35,7 +35,7 @@ export function MainNav() {
 				</Link>
 			))}
 			{/* I want this link to be on the extreme right on large screens */}
-			<Link to="/login">
+			<Link to="/signin">
 				<Button variant="ghost" size="sm" className="gap-2">
 					<Lock className="h-4 w-4" />
 					Admin

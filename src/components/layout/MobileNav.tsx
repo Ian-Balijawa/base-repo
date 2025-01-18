@@ -51,7 +51,7 @@ export function MobileNav() {
 							</motion.div>
 						))}
 						<Link
-							to="/login"
+							to="/signin"
 							className="flex items-center gap-2 text-sm font-medium"
 							onClick={() => setOpen(false)}
 						>

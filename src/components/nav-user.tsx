@@ -17,12 +17,13 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/hooks/useAuth";
 import { User } from "@/types/api";
+import { useAppDispatch } from "@/app/hooks";
+import { signout } from "@/app/slices/auth";
 
-export function NavUser({ user }: { user: User | undefined }) {
+export function NavUser({ user }: { user: User | null }) {
 	const { isMobile } = useSidebar();
-	const { logout } = useAuth();
+	const dispatch = useAppDispatch();
 
 	if (!user) return null;
 
@@ -73,7 +74,7 @@ export function NavUser({ user }: { user: User | undefined }) {
 							</div>
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => logout.mutate()}>
+						<DropdownMenuItem onClick={() => dispatch(signout())}>
 							<LogOut />
 							Log out
 						</DropdownMenuItem>

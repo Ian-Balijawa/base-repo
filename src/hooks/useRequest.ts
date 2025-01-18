@@ -9,23 +9,23 @@ const BASE_URL = __prod__
 	? import.meta.env.VITE_APP_BASE_URL_PROD
 	: import.meta.env.VITE_APP_BASE_URL_DEV;
 
-export default function useRequest(_requireAuth: boolean = false): AxiosInstance {
-	const token = useSelector((state: RootState) => state.auth.token);
+export default function useRequest( _requireAuth: boolean = false ): AxiosInstance {
+	const accessToken = useSelector( ( state: RootState ) => state.auth.accessToken );
 
 	const dispatch = useDispatch();
 
-	const instance = axios.create({
+	const instance = axios.create( {
 		baseURL: BASE_URL,
-		headers: { Authorization: `Bearer ${token}` },
-	});
+		headers: { Authorization: `Bearer ${accessToken}` },
+	} );
 
 	instance.interceptors.response.use(
-		(response) => {
-			if (Array.isArray(response.data)) {
+		( response ) => {
+			if ( Array.isArray( response.data ) ) {
 				return response;
 			}
 
-			if (!response.data.message) {
+			if ( !response.data.message ) {
 				return response;
 			}
 
@@ -34,15 +34,15 @@ export default function useRequest(_requireAuth: boolean = false): AxiosInstance
 			);
 			return response;
 		},
-		(error: AxiosError) => {
+		( error: AxiosError ) => {
 			// @ts-ignore
-			toast.error(error.response.data?.message || 'Operation failed');
+			toast.error( error.response.data?.message || 'Operation failed' );
 
 			// @ts-ignore
-			if (error.response?.data.message === 'Invalid token') {
-				dispatch(signout());
+			if ( error.response?.data.message === 'Invalid token' ) {
+				dispatch( signout() );
 			}
-			return Promise.reject(error);
+			return Promise.reject( error );
 		}
 	);
 

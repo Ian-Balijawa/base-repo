@@ -4,25 +4,25 @@ import { User } from '@/types/api';
 
 export interface Auth {
 	user: User | null;
-	token: string;
+	accessToken: string;
 }
 
 const initialState: Auth = {
 	user: null,
-	token: '',
+	accessToken: '',
 };
 
 const slice = createSlice( {
 	name: 'auth',
 	initialState,
 	reducers: {
-		signin: ( state, action: PayloadAction<{ user: User | null; token: string }> ) => {
+		signin: ( state, action: PayloadAction<{ user: User | null; accessToken: string }> ) => {
 			state.user = action.payload.user;
-			state.token = action.payload.token;
+			state.accessToken = action.payload.accessToken;
 		},
 		signout: ( state ) => {
 			state.user = null;
-			state.token = '';
+			state.accessToken = '';
 		},
 	},
 } );

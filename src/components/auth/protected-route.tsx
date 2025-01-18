@@ -10,11 +10,15 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children, requiredPermissions = [] }: ProtectedRouteProps) {
-	const { user } = useAppSelector((state) => state.auth);
+	const { user, accessToken } = useAppSelector((state) => state.auth);
 	const location = useLocation();
 
-	if (user) {
-		return <Navigate to="/auth/login" state={{ from: location }} replace />;
+	if (!accessToken || !user) {
+		return <Navigate to="/auth/signin" state={{ from: location }} replace />;
+	}
+
+	if (!user.isEmailVerified) {
+		return <Navigate to="/auth/verify-email" state={{ from: location }} replace />;
 	}
 
 	// Simple permission check - you should implement your own logic
